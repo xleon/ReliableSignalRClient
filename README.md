@@ -12,3 +12,4 @@ I did this utility when working on a "whatsapp" like style chat, ensuring every 
 - Documentation
 - Samples
 - Nuget package
+- Tests

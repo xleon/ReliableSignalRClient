@@ -5,8 +5,8 @@ namespace QueuedSignalR.Client
 {
 	public class PCLTimer
 	{
-		private bool _timerRunning;
-		public bool IsRunning => _timerRunning;
+		public bool IsRunning { get; private set; }
+
 		private readonly TimeSpan _interval;
 		private readonly Action _tick;
 		private readonly bool _runOnce;
@@ -20,35 +20,30 @@ namespace QueuedSignalR.Client
 
 		public PCLTimer Start()
 		{
-			if (!_timerRunning)
-			{
-				_timerRunning = true;
-				var t = RunTimer();
-			}
+			if (IsRunning)
+				return this;
+
+			IsRunning = true;
+			var t = RunTimer();
 
 			return this;
 		}
 
-		public void Stop()
-		{
-			_timerRunning = false;
-		}
+		public void Stop() => 
+			IsRunning = false;
 
 		private async Task RunTimer()
 		{
-			while (_timerRunning)
+			while (IsRunning)
 			{
 				await Task.Delay(_interval);
 
-				if (_timerRunning)
-				{
-					_tick();
+				if (!IsRunning) continue;
 
-					if (_runOnce)
-					{
-						Stop();
-					}
-				}
+				_tick();
+
+				if (_runOnce)
+					Stop();
 			}
 		}
 	}
