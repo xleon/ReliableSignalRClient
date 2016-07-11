@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/5jkoijqetsqmpaii?svg=true)](https://ci.appveyor.com/project/xleon/reliablesignalrclient)
+
 ## ReliableSignalRClient
 
 Fluent SignalR client with support for disconnected state

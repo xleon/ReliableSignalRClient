@@ -91,21 +91,15 @@ namespace ReliableSignalR.Client
 		public virtual async Task<bool> Connect()
 		{
 			if (string.IsNullOrEmpty(_endpointUri))
-			{
-				throw new InvalidOperationException("WithEndpoint() must be called before you connect");
-			}
+                throw new InvalidOperationException("WithEndpoint() must be called before you connect");
 
-			if (string.IsNullOrEmpty(_hubName))
-			{
-				throw new InvalidOperationException("WithHubName() must be called before you connect");
-			}
+            if (string.IsNullOrEmpty(_hubName))
+                throw new InvalidOperationException("WithHubName() must be called before you connect");
 
-			if (_connection != null)
-			{
-				return false;
-			}
+            if (_connection != null)
+                return false;
 
-			_connection = new HubConnection(_endpointUri);
+            _connection = new HubConnection(_endpointUri);
 			_connection.StateChanged += OnConnectionStateChangedHandler;
 			_connection.Reconnected += OnReconnectedHandler;
 
@@ -238,6 +232,7 @@ namespace ReliableSignalR.Client
 			}
 		}
 
+        // TODO returned value will be lost if the invoke fails => allow to pass an Action<T> as parameter
 		public async Task<T> Invoke<T>(string method, params object[] args)
 		{
 			await Connect(); // In case there isn´t a current connection
