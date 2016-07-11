@@ -44,6 +44,7 @@
     <Compile Include="Contracts\IPlugableCache.cs" />
     <Compile Include="Models\FailedInvoke.cs" />
     <Compile Include="Contracts\IReliableSignalRClient.cs" />
+    <Compile Include="Utils\PlugableCacheWrapper.cs" />
     <Compile Include="Utils\SimpleTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReliableSignalRClient.cs" />
