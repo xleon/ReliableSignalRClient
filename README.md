@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/5jkoijqetsqmpaii?svg=true)](https://ci.appveyor.com/project/xleon/reliablesignalrclient)
-s
+
 ## ReliableSignalRClient
 
 This is a work in progress...
