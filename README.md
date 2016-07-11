@@ -1,4 +1,5 @@
-## QueuedSignalRClient
+## ReliableSignalRClient
+
 Fluent SignalR client with support for disconnected state
 
 Method invokes may be lost at some point due to connection failure or other reasons. 

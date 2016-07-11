@@ -1,4 +1,4 @@
-namespace QueuedSignalR.Client
+namespace ReliableSignalR.Client.Models
 {
 	internal class FailedInvoke
 	{

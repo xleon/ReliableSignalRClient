@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
+using ReliableSignalR.Client.Contracts;
+using ReliableSignalR.Client.Models;
+using ReliableSignalR.Client.Utils;
 
-namespace QueuedSignalR.Client
+namespace ReliableSignalR.Client
 {
-	public class QueuedSignalRClient : IQueuedSignalRClient
+	public class ReliableSignalRClient : IReliableSignalRClient
     {
 		public event Action<StateChange> OnConnectionStateChanged;
 		public ConnectionState ConnectionState { get; private set; } = ConnectionState.Disconnected;
@@ -23,59 +26,59 @@ namespace QueuedSignalR.Client
 		private TimeSpan? _transportConnectionTimeout;
 		private Queue<FailedInvoke> _queue;
 		private Action<IHubProxy> _proxySubscriber;
-		private PCLTimer _timer;
+		private SimpleTimer _timer;
 
 		#region Constructor and fluent settings
 
-		public QueuedSignalRClient()
+		public ReliableSignalRClient()
 		{
-			_className = nameof(QueuedSignalRClient);
+			_className = nameof(ReliableSignalRClient);
 		}
 
-		public IQueuedSignalRClient SetTransportTimeout(TimeSpan transportConnectionTimeout)
+		public IReliableSignalRClient SetTransportTimeout(TimeSpan transportConnectionTimeout)
 		{
 			_transportConnectionTimeout = transportConnectionTimeout;
 			return this;
 		}
 
-		public IQueuedSignalRClient UseTracer(TextWriter textWritter, TraceLevels traceLevel = TraceLevels.All)
+		public IReliableSignalRClient UseTracer(TextWriter textWritter, TraceLevels traceLevel = TraceLevels.All)
 		{
 			_tracer = textWritter;
 			_traceLevel = traceLevel;
 			return this;
 		}
 
-		public IQueuedSignalRClient SetEndpoint(string endpointUri)
+		public IReliableSignalRClient SetEndpoint(string endpointUri)
 		{
 			_endpointUri = endpointUri;
 			return this;
 		}
 
-		public IQueuedSignalRClient SetHubName(string hubName)
+		public IReliableSignalRClient SetHubName(string hubName)
 		{
 			_hubName = hubName;
 			return this;
 		}
 
-		public IQueuedSignalRClient SetHeadersProvider(Func<Dictionary<string, string>> headersProvider)
+		public IReliableSignalRClient SetHeadersProvider(Func<Dictionary<string, string>> headersProvider)
 		{
 			_headersProvider = headersProvider;
 			return this;
 		}
 
-		public IQueuedSignalRClient RetryFailedInvokesOnReconnection()
+		public IReliableSignalRClient RetryFailedInvokesOnReconnection()
 		{
 			_queue = new Queue<FailedInvoke>();
 			return this;
 		}
 
-		public IQueuedSignalRClient SetSecondsToReconnect(int seconds)
+		public IReliableSignalRClient SetSecondsToReconnect(int seconds)
 		{
 			_secondsToReconnect = seconds;
 			return this;
 		}
 
-		public IQueuedSignalRClient SetProxySubscriber(Action<IHubProxy> proxySubscriber)
+		public IReliableSignalRClient SetProxySubscriber(Action<IHubProxy> proxySubscriber)
 		{
 			_proxySubscriber = proxySubscriber;
 			return this;
@@ -201,7 +204,7 @@ namespace QueuedSignalR.Client
 			// SignalR doesn´t do anything after disconnected state, so we need to manually reconnect
 			if (_timer == null)
 			{
-				_timer = new PCLTimer(TimeSpan.FromSeconds(_secondsToReconnect), async () =>
+				_timer = new SimpleTimer(TimeSpan.FromSeconds(_secondsToReconnect), async () =>
 				{
 					DismissCurrentConnection();
 					await Connect();

@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 
-namespace QueuedSignalR.Client
+namespace ReliableSignalR.Client.Utils
 {
-	public class PCLTimer
+	public class SimpleTimer
 	{
 		public bool IsRunning { get; private set; }
 
@@ -11,14 +11,14 @@ namespace QueuedSignalR.Client
 		private readonly Action _tick;
 		private readonly bool _runOnce;
 
-		public PCLTimer(TimeSpan interval, Action tick, bool runOnce = false)
+		public SimpleTimer(TimeSpan interval, Action tick, bool runOnce = false)
 		{
 			_interval = interval;
 			_tick = tick;
 			_runOnce = runOnce;
 		}
 
-		public PCLTimer Start()
+		public SimpleTimer Start()
 		{
 			if (IsRunning)
 				return this;

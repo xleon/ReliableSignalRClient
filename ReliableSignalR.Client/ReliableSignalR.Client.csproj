@@ -8,8 +8,8 @@
     <ProjectGuid>{C8AEF84C-4893-444E-8EE6-EBB894DA5F4A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QueuedSignalR.Client</RootNamespace>
-    <AssemblyName>QueuedSignalR.Client</AssemblyName>
+    <RootNamespace>ReliableSignalR.Client</RootNamespace>
+    <AssemblyName>ReliableSignalR.Client</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -41,11 +41,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FailedInvoke.cs" />
-    <Compile Include="IQueuedSignalRClient.cs" />
-    <Compile Include="PCLTimer.cs" />
+    <Compile Include="Contracts\IPlugableCache.cs" />
+    <Compile Include="Models\FailedInvoke.cs" />
+    <Compile Include="Contracts\IReliableSignalRClient.cs" />
+    <Compile Include="Utils\SimpleTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueuedSignalRClient.cs" />
+    <Compile Include="ReliableSignalRClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
