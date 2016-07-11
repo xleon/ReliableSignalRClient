@@ -1,8 +1,10 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/5jkoijqetsqmpaii?svg=true)](https://ci.appveyor.com/project/xleon/reliablesignalrclient)
-
+s
 ## ReliableSignalRClient
 
-Fluent SignalR client with support for disconnected state
+This is a work in progress...
+
+Fluent SignalR client with support for disconnected state.
 
 Method invokes may be lost at some point due to connection failure or other reasons. 
 Forget about try/catch statements when using SignalR. 
